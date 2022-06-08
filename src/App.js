@@ -43,6 +43,48 @@ function App() {
     setIsOpen(!isOpen);
   };
 
+  const cardData = [
+    {
+      start: "self",
+      startOffset: 100,
+      duration: 400,
+      // easing: [0.25, 0.1, 0.6, 1.5],
+      properties: [
+        {
+          startValue: 180,
+          endValue: 0,
+          property: "rotate",
+        },
+        {
+          startValue: 0,
+          endValue: 1,
+          property: "scale",
+        },
+      ],
+    },
+  ];
+
+  const scrollDataB = [
+    {
+      start: "self",
+      startOffset: 100,
+      duration: 430,
+      // easing: [0.25, 0.1, 0.6, 1.5],
+      properties: [
+        // {
+        //   startValue: 360,
+        //   endValue: 0,
+        //   property: "rotate",
+        // },
+        {
+          startValue: 1,
+          endValue: 1,
+          property: "scale",
+        },
+      ],
+    },
+  ];
+
   const scrollData1 = [
     {
       start: ".scrollData-trigger",
@@ -183,34 +225,6 @@ function App() {
     },
   ];
 
-  const scrollDataB = [
-    {
-      start: ".scrollData-trigger",
-      duration: "30vh",
-      properties: [
-        {
-          startValue: 0,
-          endValue: -0,
-          unit: "vh",
-          property: "translateY",
-        },
-      ],
-    },
-    {
-      start: ".scrollData-trigger",
-      startOffset: "0px",
-      duration: "0px",
-      properties: [
-        {
-          startValue: 0,
-          endValue: 0,
-          unit: "px",
-          property: "translateY",
-        },
-      ],
-    },
-  ];
-
   const participate = async (e) => {
     if (typeof window.ethereum !== "undefined") {
       await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -264,12 +278,14 @@ function App() {
             setSource(variable[Object.keys(variable)]);
           });
       }
+      setToggel(true);
+      setFlip(true);
     }
-    setLoading(false);
-    if (source.length > 0) {
-      setLoading(true);
-      console.log(source);
-    }
+    // setLoading(false);
+    // if (source.length > 0) {
+    //   setLoading(true);
+    //   console.log(source);
+    // }
   };
 
   useEffect(() => {
@@ -284,6 +300,11 @@ function App() {
   return (
     <div className="App">
       <h1 className="header">Connect Wallet</h1>
+      {/* <ParticleTextEffect
+        className="header"
+        text="Connect Wallet"
+        type="bubbles"
+      ></ParticleTextEffect> */}
 
       <div className="imageBox1">
         <Plx parallaxData={scrollData1}>
@@ -294,22 +315,24 @@ function App() {
             ref={ref}
             isFlipped={flip}
           >
-            <FrontSide>
-              <div>
-                {isOpen && (
-                  <Popup
-                    content={
-                      <>
-                        <b>Please select the Play button to Start the Game</b>
-                        <p>Thank You for playing with us !!!</p>
-                      </>
-                    }
-                    handleClose={togglePopup}
-                  />
-                )}
-              </div>
-              <img class="imgf" src={source} onClick={togglePopup}></img>
-            </FrontSide>
+            <Plx className="rcard" parallaxData={cardData}>
+              <FrontSide>
+                <div>
+                  {isOpen && (
+                    <Popup
+                      content={
+                        <>
+                          <b>Please select the Play button to Start the Game</b>
+                          <p>Thank You for playing with us !!!</p>
+                        </>
+                      }
+                      handleClose={togglePopup}
+                    />
+                  )}
+                </div>
+                <img class="imgf" src={frontImage} onClick={togglePopup}></img>
+              </FrontSide>
+            </Plx>
 
             <BackSide>
               <div className="stickyimg">
@@ -345,7 +368,7 @@ function App() {
                   />
                 )}
               </div>
-              <img class="imgf" src={source} onClick={togglePopup}></img>
+              <img class="imgf" src={frontImage} onClick={togglePopup}></img>
             </FrontSide>
 
             <BackSide>
@@ -382,7 +405,7 @@ function App() {
                   />
                 )}
               </div>
-              <img class="imgf" src={source} onClick={togglePopup}></img>
+              <img class="imgf" src={frontImage} onClick={togglePopup}></img>
             </FrontSide>
 
             <BackSide>
@@ -419,7 +442,7 @@ function App() {
                   />
                 )}
               </div>
-              <img class="imgf" src={source} onClick={togglePopup}></img>
+              <img class="imgf" src={frontImage} onClick={togglePopup}></img>
             </FrontSide>
 
             <BackSide>
@@ -456,7 +479,7 @@ function App() {
                   />
                 )}
               </div>
-              <img class="imgf" src={source} onClick={togglePopup}></img>
+              <img class="imgf" src={frontImage} onClick={togglePopup}></img>
             </FrontSide>
 
             <BackSide>

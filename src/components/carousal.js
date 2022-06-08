@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import Flippy, { FrontSide, BackSide } from "react-flippy";
 import { ParallaxHover } from "react-parallax-hover";
 import { ShakeLittle } from "reshake";
-//import { Parallax } from "react-scroll-parallax";
+import Plx from "react-plx";
 import { ethers } from "ethers";
 import biscuit from "../artifacts/contracts/Biscuit.sol/Biscuit.json";
 import Repeat from "react-repeat-component";
@@ -83,6 +83,34 @@ const Carousel = () => {
     { id: 50, img: null, status: false },
     { id: 51, img: null, status: false },
   ]);
+  let image_url;
+
+  const cardData = [
+    {
+      start: "self",
+      startOffset: 100,
+      duration: 300,
+      // easing: [0.25, 0.1, 0.6, 1.5],
+      properties: [
+        {
+          startValue: 50,
+          endValue: 0,
+          unit: "vh",
+          property: "translateX",
+        },
+        {
+          startValue: 180,
+          endValue: 0,
+          property: "rotate",
+        },
+        {
+          startValue: 0,
+          endValue: 1,
+          property: "scale",
+        },
+      ],
+    },
+  ];
 
   const game = async (i) => {
     console.log(i);
@@ -96,135 +124,82 @@ const Carousel = () => {
         signer
       );
 
-      const tx = await contract.assignSecond();
-      tx.wait(1);
-      console.log(tx.hash);
-      // tar = i.target;
-      // setTarget(tar);
-      const s = await provider.waitForTransaction(tx.hash);
-      code2 = await contract.getSecondCode();
-      contract.on("AssignedCode2", AssignedCodeEvent(i));
-      return () => {
-        contract.removeAllListeners("AssignedCode2");
-      };
-      // console.log("code2 is");
-      // console.log(code2);
-      // if (code2 < 6631) {
-      //   let endpoint =
-      //     "https://bafybeifniz2yhpir6iyavzl2ntbc3wgpwzfsmr5gsmbtvp4trd2l3g66zi.ipfs.dweb.link/jsonsA/";
-      //   let jsonUrl = endpoint + code2 + ".json";
-      //   fetch(jsonUrl)
-      //     .then((res) => res.json())
-      //     .then((data) => {
-      //       image_url = data["Url"];
-      //       console.log("data:", data["Url"]);
-      //       console.log(image_url);
-      //       // variable = { image_url };
-      //       // console.log(e.target.src);
-      //       const arr = [...cardArr];
-      //       arr[i].img = image_url;
-      //       arr[i].status = true;
-      //       setCardArr([...arr]);
-      //       console.log(cardArr);
-      //       //e.target.src = image_url;
-      //       // console.log(e.target.src);
-      //       setImageSource(image_url);
-      //       console.log(Date.now());
-      //       setImageHash(Date.now());
-      //       console.log(imageHash);
-      //     });
-      // } else {
-      //   let endpoint =
-      //     "https://bafybeiepbnhno6sygrdqeiyfv5ca4gbrclmr5hzbquzl6lhck6b7pbloo4.ipfs.dweb.link/jsonsB/";
-      //   let jsonUrl = endpoint + code2 + ".json";
-      //   fetch(jsonUrl)
-      //     .then((res) => res.json())
-      //     .then((data) => {
-      //       image_url = data["Url"];
-      //       console.log("data:", data["Url"]);
-      //       console.log(image_url);
-      //       // variable = { image_url };
-      //       // console.log(e.target.src);
-      //       const arr = [...cardArr];
-      //       arr[i].img = image_url;
-      //       arr[i].status = true;
-      //       setCardArr([...arr]);
-      //       console.log(cardArr);
-      //       // e.target.src = image_url;
-      //       // console.log(e.target.src);
-      //       console.log(Date.now());
+      const tx = await contract.secondCode();
+      tx.wait();
+      // console.log("trasnaction is");
+      // console.log(tx);
 
-      //       setImageSource(image_url);
-      //       setImageHash(Date.now());
-      //       console.log(imageHash);
-      //     });
-      //   setFlip(true);
-      //   console.log(imagesource);
-      //   console.log(imageHash);
+      const code2 = await contract.getSecondCode();
+
+      // console.log(code2);
+      if (code2 < 6631) {
+        let endpoint =
+          "https://bafybeifniz2yhpir6iyavzl2ntbc3wgpwzfsmr5gsmbtvp4trd2l3g66zi.ipfs.dweb.link/jsonsA/";
+        let jsonUrl = endpoint + code2 + ".json";
+        fetch(jsonUrl)
+          .then((res) => res.json())
+          .then((data) => {
+            image_url = data["Url"];
+            console.log("data:", data["Url"]);
+            // variable = { image_url };
+            // console.log(e.target.src);
+            const arr = [...cardArr];
+            arr[i].img = image_url;
+            arr[i].status = true;
+            setCardArr([...arr]);
+            console.log(cardArr);
+            //e.target.src = image_url;
+            // console.log(e.target.src);
+            setImageSource(image_url);
+            console.log(Date.now());
+            setImageHash(Date.now());
+            console.log(imageHash);
+          });
+      } else {
+        let endpoint =
+          "https://bafybeiepbnhno6sygrdqeiyfv5ca4gbrclmr5hzbquzl6lhck6b7pbloo4.ipfs.dweb.link/jsonsB/";
+        let jsonUrl = endpoint + code2 + ".json";
+        fetch(jsonUrl)
+          .then((res) => res.json())
+          .then((data) => {
+            image_url = data["Url"];
+            console.log("data:", data["Url"]);
+            console.log(image_url);
+            // variable = { image_url };
+            // console.log(e.target.src);
+            const arr = [...cardArr];
+            arr[i].img = image_url;
+            arr[i].status = true;
+            setCardArr([...arr]);
+            console.log(cardArr);
+            // e.target.src = image_url;
+            // console.log(e.target.src);
+            console.log(Date.now());
+
+            setImageSource(image_url);
+            setImageHash(Date.now());
+            console.log(imageHash);
+          });
+        setFlip(true);
+        console.log(imagesource);
+        console.log(imageHash);
+      }
+
+      // const code1 = await contract.getFirstCode();
+      // console.log(code1);
+      // if (code1 == code2) {
+      //   alert("user wins !!");
+      // } else {
+      //   alert("you loose !!");
       // }
     }
-  };
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const contract = new ethers.Contract(contract_address, biscuit.abi, signer);
-
-  const AssignedCodeEvent = async (i) => {
-    console.log("code2 is");
-    console.log(code2);
-    if (code2 < 6631) {
-      let endpoint =
-        "https://bafybeifniz2yhpir6iyavzl2ntbc3wgpwzfsmr5gsmbtvp4trd2l3g66zi.ipfs.dweb.link/jsonsA/";
-      let jsonUrl = endpoint + code2 + ".json";
-      fetch(jsonUrl)
-        .then((res) => res.json())
-        .then((data) => {
-          image_url = data["Url"];
-          console.log("data:", data["Url"]);
-          console.log(image_url);
-          // variable = { image_url };
-          // console.log(e.target.src);
-          const arr = [...cardArr];
-          arr[i].img = image_url;
-          arr[i].status = true;
-          setCardArr([...arr]);
-          console.log(cardArr);
-          //e.target.src = image_url;
-          // console.log(e.target.src);
-          setImageSource(image_url);
-          console.log(Date.now());
-          setImageHash(Date.now());
-          console.log(imageHash);
-        });
-    } else {
-      let endpoint =
-        "https://bafybeiepbnhno6sygrdqeiyfv5ca4gbrclmr5hzbquzl6lhck6b7pbloo4.ipfs.dweb.link/jsonsB/";
-      let jsonUrl = endpoint + code2 + ".json";
-      fetch(jsonUrl)
-        .then((res) => res.json())
-        .then((data) => {
-          image_url = data["Url"];
-          console.log("data:", data["Url"]);
-          console.log(image_url);
-          // variable = { image_url };
-          // console.log(e.target.src);
-          const arr = [...cardArr];
-          arr[i].img = image_url;
-          arr[i].status = true;
-          setCardArr([...arr]);
-          console.log(cardArr);
-          // e.target.src = image_url;
-          // console.log(e.target.src);
-          console.log(Date.now());
-
-          setImageSource(image_url);
-          setImageHash(Date.now());
-          console.log(imageHash);
-        });
-      setFlip(true);
-      console.log(imagesource);
-      console.log(imageHash);
-    }
+    // setLoading(false);
+    // if (source.length > 0) {
+    //   setLoading(true);
+    //   console.log(source);
+    // }
+    // console.log(imagesource);
   };
 
   if (isLoading) {
@@ -236,10 +211,6 @@ const Carousel = () => {
               <div class="item">
                 {/* {console.log("src" + { source })} */}
 
-                {/*<Parallax
-                  className="Parallax-module__parallax--skrA3"
-                  rotateZ={["0deg", "360deg"]}
-          >*/}
                 <Flippy
                   flipOnHover={false}
                   flipOnClick={false}
@@ -251,32 +222,33 @@ const Carousel = () => {
                       " isActive";
                   }}
                 >
-                  <div className="fullcard">
-                    <ShakeLittle>
-                      <FrontSide>
-                        <img
-                          class="imgcf"
-                          onClick={() => {
-                            game(i);
-                          }}
-                          src={frontImage}
-                        ></img>
-                      </FrontSide>
-                    </ShakeLittle>
-
-                    <BackSide>
-                      <div>
-                        <ParallaxHover borderRadius={10} scale={5}>
+                  <Plx className="rcard" parallaxData={cardData}>
+                    <div className="fullcard">
+                      <ShakeLittle>
+                        <FrontSide>
                           <img
-                            class="imgcb"
-                            src={cardArr[i].status ? cardArr[i].img : image}
-                          />
-                        </ParallaxHover>
-                      </div>
-                    </BackSide>
-                  </div>
+                            class="imgcf"
+                            onClick={() => {
+                              game(i);
+                            }}
+                            src={frontImage}
+                          ></img>
+                        </FrontSide>
+                      </ShakeLittle>
+
+                      <BackSide>
+                        <div>
+                          <ParallaxHover borderRadius={10} scale={5}>
+                            <img
+                              class="imgcb"
+                              src={cardArr[i].status ? cardArr[i].img : image}
+                            />
+                          </ParallaxHover>
+                        </div>
+                      </BackSide>
+                    </div>
+                  </Plx>
                 </Flippy>
-                {/*</Parallax> */}
               </div>
             </div>
           )}

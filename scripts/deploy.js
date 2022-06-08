@@ -6,7 +6,7 @@ async function main() {
 
   await biscuit_contract.deployed();
 
-  console.log("biscuit_contract deployed to:", biscuit_contract.address); // 0xf5Cb523b3deE7B125B2944C7a1f9cdf7a4992DC5
+  console.log("biscuit_contract deployed to:", biscuit_contract.address); // 0xBf0495d2d8ba03B662A12375067353E299f5a8d3
 }
 
 main()

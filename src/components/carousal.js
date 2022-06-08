@@ -13,7 +13,7 @@ import Repeat from "react-repeat-component";
 import { wait } from "@testing-library/user-event/dist/utils";
 import "./carousal.css";
 
-const contract_address = "0xf5Cb523b3deE7B125B2944C7a1f9cdf7a4992DC5";
+const contract_address = "0xBf0495d2d8ba03B662A12375067353E299f5a8d3";
 
 const Carousel = () => {
   let variable = {};

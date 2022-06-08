@@ -14,7 +14,7 @@ import { ShakeLittle, ShakeSlow } from "reshake";
 import Plx from "react-plx";
 import { ethers } from "ethers";
 import biscuit from "./artifacts/contracts/Biscuit.sol/Biscuit.json";
-const contract_address = "0xf5Cb523b3deE7B125B2944C7a1f9cdf7a4992DC5";
+const contract_address = "0xBf0495d2d8ba03B662A12375067353E299f5a8d3";
 
 function App() {
   // contract
